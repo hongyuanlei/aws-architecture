@@ -10,7 +10,7 @@ These low latency links between AZs are used by many AWS services to replicate d
 
 Often, there are three, four, or even five AZs linked together via these low latency connections. This localized geographical grouping of multiple AZs, which would include multiple data centers, is defined as an AWS Region.
 
-![](./images/aws-global-infra-region-and-az.png)
+<img src="./images/aws-global-infra-region-and-az.png" width="620"/>
 
 Multiple AZs within a region allows you to create highly available and resilient applications and services. By architecting your solutions to utilize resources across more than one AZ ensures that minimal or no impact will occur to your infrastructure should an AZ experience a failure, which does happen).
 
