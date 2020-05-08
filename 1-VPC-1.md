@@ -97,7 +97,10 @@ You can scope the route to all destinations not explictly known to the route tab
 
 DHCP provides a standard for passing configuration information to hosts on a TCP/IP network. The options field of a DHCP message contains the configuration parameters. Some of those parameters are the domain name, domain name server, and the netbios-node-type.
 
-AWS automically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options: domain-name-server(defaulted to AmazonProvidedDNS) and domain-name(defaulted to the domain name for your region). AmazonProvidedDNS is an Amazon Domain Name System(DNS) server, and this option enables DNS for instances that need to communicate over the Amazon VPC's IGW.
+AWS automically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options: 
+- domain-name-server(defaulted to AmazonProvidedDNS)
+AmazonProvidedDNS is an Amazon Domain Name System(DNS) server, and this option enables DNS for instances that need to communicate over the Amazon VPC's IGW.
+- domain-name(defaulted to the domain name for your region). 
 
 The DHCP option sets element of an Amazon VPC allows your to direct Amazon EC2 host name assignments to your own resources. To assign your own domain name to your instances, create a custom DHCP option set and assign it to your Amazon VPC. You can configure the following values within a DHCP option set:
 
