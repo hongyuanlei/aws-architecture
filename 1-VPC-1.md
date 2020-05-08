@@ -93,6 +93,22 @@ You must do the following to enable an Amazon EC2 instance to send and receive t
 
 You can scope the route to all destinations not explictly known to the route table(0.0.0.0/0), or you can scope the route to a narrower range of IP addresses, such as the public IP addresses of your company's public endpoint outside of AWS or the EIP addresses of other Amazon EC2 instances outside your Amazon VPC.
 
+### Dynamic Host Configuration Protocl (DHCP) Option Sets
+
+DHCP provides a standard for passing configuration information to hosts on a TCP/IP network. The options field of a DHCP message contains the configuration parameters. Some of those parameters are the domain name, domain name server, and the netbios-node-type.
+
+AWS automically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options: domain-name-server(defaulted to AmazonProvidedDNS) and domain-name(defaulted to the domain name for your region). AmazonProvidedDNS is an Amazon Domain Name System(DNS) server, and this option enables DNS for instances that need to communicate over the Amazon VPC's IGW.
+
+The DHCP option sets element of an Amazon VPC allows your to direct Amazon EC2 host name assignments to your own resources. To assign your own domain name to your instances, create a custom DHCP option set and assign it to your Amazon VPC. You can configure the following values within a DHCP option set:
+
+- domain-name-servers - The IP addresses of up to four domain name servers, separated by commas. The default is AmazonProvidedDNS.
+- domain-name - Specify the desired domain name here(for example, mycompany.com).
+- ntp-servers - The IP addresses of up to four Network Time Protocol(NTP) servers.
+- netbios-name-servers - The IP addresses of up to four NetBIOS name servers, separated by commas.
+- netbios-node-type - Set this value to 2.
+
+Every Amazon VPC must have only one DHCP option set assigned to it.
+
 ### Elastic IP Addresses(EIPs)
 
 AWS maintains a pool of public IP addresses in  each region and makes them available for you to assicate to resources within your Amazon VPCs. An Elastic IP addresses is a static, public IP address in the pool for the region that you can allocate to your account(pull from the pool) and release(return to the pool). EIPs allow you to maintain a set of IP addresses that remain fixed while the underlying infrastructure may change over time. Here are the important points to understand:
