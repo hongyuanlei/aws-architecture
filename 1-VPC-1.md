@@ -54,7 +54,8 @@ An Amazon VPC consists of the following components:
 - Security groups
 - Network Access Control Lists (ACLs)
 
-An Amazon VPC has the following optional components: Internet Gateways (IGWs)
+An Amazon VPC has the following optional components: 
+- Internet Gateways (IGWs)
 - Elastic IP (EIP) addresses
 - Elastic Network Interfaces (ENIs)
 - Endpoints
@@ -148,7 +149,23 @@ An ENI is a network interface that you can attach to an instance in an Amazon VP
 
 ENIs allow you to create a management network, use network and security appliances in your Amazon VPC, create dual-homed instances with workloads/roles on distinct subnets, or create a low-budget, high-availability solution.
 
+### Security Groups
 
+A security group is virual stateful firewall that controls inbound and outbound network traffic to AWS resources and Amazon EC2 instances. All Amazon EC2 instances must be launched into a security group. **If a security group is not specified at launch, then the instance will be launched into the default security group for the Amazon VPC**. The default security gorup allows communication between all resources within the security gorup, allows all outbound traffic, and denies all other traffic. You may change the rules for the default security group, but you may not delete the default security group.
+
+Here is the settings of the default security group.
+
+- Inbound
+
+Source        | Protocol | Port Range | Comments
+------------- | -------- | ---------- | --------
+sg-xxxxx      | All      | All        | Allow inbound traffic from instances within the same security group. 
+
+- Outbound
+
+Source        | Protocol | Port Range | Comments
+------------- | -------- | ---------- | --------
+0.0.0.0/0     | All      | All        | Allow all outbound traffic
 
 ### IPV4 address classification
 
