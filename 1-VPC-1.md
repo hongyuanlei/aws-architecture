@@ -12,7 +12,7 @@ Often, there are three, four, or even five AZs linked together via these low lat
 
 <img src="./images/aws-global-infra-region-and-az.png" width="620"/>
 
-Multiple AZs within a region allows you to create highly available and resilient applications and services. By architecting your solutions to utilize resources across more than one AZ ensures that minimal or no impact will occur to your infrastructure should an AZ experience a failure, which does happen).
+Multiple AZs within a region allows you to create highly available and resilient applications and services. By architecting your solutions to utilize resources across more than one AZ ensures that minimal or no impact will occur to your infrastructure should an AZ experience a failure, which does happen.
 
 Anyone can deploy resources in the cloud, but architecting them in a way that ensures your infrastructure remains stable, available, and resilient when faced with a disaster is a different matter. Making use of at least two AZs in a region helps you maintain high availability of your infrastructure and its always a recommended best practice.
 
@@ -42,6 +42,8 @@ Amazon VPC is the networking layer for Amzaon Elastic Compute Cloud(Amazon EC2),
 Within a region, you can create multiple Amazon VPCs, and each Amazon VPC is logically isolated even if it shares its IP address space.
 
 When you create an Amazon VPC, you must specify the IPv4 address range by choosing a Classless Inter-Domain Routing(CIDR) block, such as 10.0.0.0/16. The address range of the Amazon VPC cannot be changed after the Amazon VPCs created. An Amazon VPC address range may be as large as `/16`(65536 available addresses) or as small as `/28`(16 available addresses) and should not overlap any other network with which they are to be connected.
+
+<img src="./images/aws-vpc-vpc.png" width="620"/>
 
 ### Subnets
 
