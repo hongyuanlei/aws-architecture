@@ -97,6 +97,10 @@ You should remember the following points about route tables:
 - You can replace main route table with a custom table that you've created so that each new subnet is automatically associated with it.
 - Each route in a table specifies a destination CIDR and a target; for example, traffic destined for 172.16.0.0/12 is targeted for the VPG. AWS uses the most specific route that matches the traffic to determine how to route the traffic.
 
+Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, one subnet with an address range of 10.0.0.0/24, a route table, an attached IGW, and a single Amazon EC2 instance with a private IP address and an EIP address. The route table contains two routes: the local route that permits inter-VPC communication and a route that sends all non-local traffic to the IGW (igw-id). Note that the Amazon EC2 instance has a public IP address (EIP = 198.51.100.2); this instance can be accessed from the Internet, and traffic may originate and return to this instance.
+
+<img src="./images/aws-vpc-route-table.png" width="620"/>
+
 ### Internet Gateways
 
 An Internet Gateway(IGW) is horizontally scaled, redundant, and highly available Amazon VPC component that allows communication betwwwn instances in your Amazon VPC and the Internet. An IGW provides a target in your Amazon VPC route tables for Internet-routable traffic, and it performs network address translation for instances that have been assigned public IP addresses.
