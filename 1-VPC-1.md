@@ -163,9 +163,40 @@ sg-xxxxx      | All      | All        | Allow inbound traffic from instances wit
 
 - Outbound
 
-Source        | Protocol | Port Range | Comments
+Destination   | Protocol | Port Range | Comments
 ------------- | -------- | ---------- | --------
 0.0.0.0/0     | All      | All        | Allow all outbound traffic
+
+For each security group, you add rules that control the inbound traffic to instances and a separate set of rules that control the outbound traffic. 
+
+For example, here's a security group for web servers.
+
+- Inbound
+
+Source                                | Protocol | Port Range | Comments
+------------------------------------- | -------- | ---------- | --------
+0.0.0.0/0                             | TCP      | 80         | Allow inbound traffic from the Internet to port 80.
+You network's public IP address range | TCP      | 22         | Allow Secure Shell (SSH) traffic from your company network.
+You network's public IP address range | TCP      | 3389       | Allow Remote Desktop Protocol (RDP) traffic from your company network.
+
+- Outbound
+
+Destination                                                      | Protocol | Port Range | Comments
+---------------------------------------------------------------- | -------- | ---------- | --------
+The ID of the security group for your MySQL database servers     | TCP      | 3306       | Allow outbound MySQL access to instances in the specified security group.
+The ID of the security group for your Microsoft database servers | TCP      | 1433       | Allow outbound Microsoft SQL Server access to instances in the specified security group.
+
+Here are the important points to understand about security groups:
+
+- You can create up to 500 security groups for each Amazon VPC.
+- You can add up to 50 inbound and 50 outbound rules to each security group. If you need to apply more than 100 rules to an instance, you can associate up to five security groups with each network interface.
+- **You can specify allow rules, but not deny rules**. This is an important difference between security groups and ACLs.
+- You can specify separate rules for inbound and outbound traffic.
+- By default, no inbound traffic is allowed until you add inbound rules to the security group.
+- By default, new security groups have an outbound rule that allows all outbound traffic. You can remove the rule and add outbound rules that allow specific outbound traffic only.
+- **Security groups are stateful. This means that responses to allowed inbound traffic are allowed to flow outbound regardless of outbound rules and vice versa**. This is an important difference between security groups and network ACLs.
+- Instances associated with the same security group can’t talk to each other unless you add rules allowing it (with the exception being the default security group).
+- You can change the security groups with which an instance is associated after launch, and the changes will take effect immediately.
 
 ### IPV4 address classification
 
