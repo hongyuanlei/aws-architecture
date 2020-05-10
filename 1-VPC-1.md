@@ -189,7 +189,7 @@ The ID of the security group for your Microsoft database servers | TCP      | 14
 Here are the important points to understand about security groups:
 
 - You can create up to 500 security groups for each Amazon VPC.
-- You can add up to 50 inbound and 50 outbound rules to each security group. If you need to apply more than 100 rules to an instance, you can associate up to five security groups with each network interface.
+- You can add up to 50 inbound and 50 outbound rules to each security group. If you need to apply more than 100 rules to an instance, **you can associate up to five security groups with each network interface**.
 - **You can specify allow rules, but not deny rules**. This is an important difference between security groups and ACLs.
 - You can specify separate rules for inbound and outbound traffic.
 - By default, no inbound traffic is allowed until you add inbound rules to the security group.
