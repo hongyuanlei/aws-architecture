@@ -50,7 +50,8 @@ Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, two subne
 An Amazon VPC consists of the following components:
 - Subnets
 - Route tables
-- Dynamic Host Configuration Protocol (DHCP) option sets Security groups
+- Dynamic Host Configuration Protocol (DHCP) option sets 
+- Security groups
 - Network Access Control Lists (ACLs)
 
 An Amazon VPC has the following optional components: Internet Gateways (IGWs)
