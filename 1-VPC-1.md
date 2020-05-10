@@ -43,7 +43,23 @@ Within a region, you can create multiple Amazon VPCs, and each Amazon VPC is log
 
 When you create an Amazon VPC, you must specify the IPv4 address range by choosing a Classless Inter-Domain Routing(CIDR) block, such as 10.0.0.0/16. The address range of the Amazon VPC cannot be changed after the Amazon VPCs created. An Amazon VPC address range may be as large as `/16`(65536 available addresses) or as small as `/28`(16 available addresses) and should not overlap any other network with which they are to be connected.
 
+Here's a example, an Amazon VPC with an address space of 10.0.0.0/16, two subnets with different address ranges (10.0.0.0/24 and 10.0.1.0/24) placed in different Availability Zones, and a route table with the local route specified.
+
 <img src="./images/aws-vpc-vpc.png" width="620"/>
+
+An Amazon VPC consists of the following components:
+- Subnets
+- Route tables
+- Dynamic Host Configuration Protocol (DHCP) option sets Security groups
+- Network Access Control Lists (ACLs)
+
+An Amazon VPC has the following optional components: Internet Gateways (IGWs)
+- Elastic IP (EIP) addresses
+- Elastic Network Interfaces (ENIs)
+- Endpoints
+- Peering
+- Network Address Translation (NATs) instances and NAT gateways
+- Virtual Private Gateway (VPG), Customer Gateways (CGWs), and Virtual Private Networks (VPNs)
 
 ### Subnets
 
