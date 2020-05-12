@@ -149,9 +149,21 @@ AWS maintains a pool of public IP addresses in  each region and makes them avail
 
 ### Elastic Network Interfaces(ENIs)
 
-An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary. Assigning a second network interface to an instance via an ENI allows it to be dual-homed(have network presence in different subnets). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to an replacement instance.
+An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary(eth0). Assigning a second network interface to an instance via an ENI allows it to be dual-homed(have network presence in different subnets). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to an replacement instance.
 
-ENIs allow you to create a management network, use network and security appliances in your Amazon VPC, create dual-homed instances with workloads/roles on distinct subnets, or create a low-budget, high-availability solution.
+ENIs allow you:
+- Create a management network 
+- Use network and security appliances in your Amazon VPC
+- Create dual-homed instances with workloads/roles on distinct subnets.
+- Create a low-budget, high-availability solution.
+
+#### Creating a Management Network
+
+You can create a management network using network interfaces. In this scenario, the primary network interface(eth0) on the instance handles public traffic and the secondary network interface(eth1) handles backend management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls. The public interface, which may or may not be behind a load balancer, has an associated security group that allows access to the server from the interent(for example, allow TCP port 80 and 443 from 0.0.0.0/0, or from the load balancer) while the private facing interface has an associated security group allowing SSH access only from an allowed range of IP addresses either within the VPC or from the internet, a private subnet within the VPC or virtual private gateway.
+
+To ensure failover capabilities, consider using a secondary private IPv4 for incoming traffic on a network interface. In the event of an instance failure, you can move the interface and/or secondary private IPv4 address to a standy instance.
+
+<img src="./images/aws-vpc-eni.png" width="620"/>
 
 ### Security Groups
 
