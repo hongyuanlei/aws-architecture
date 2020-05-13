@@ -165,6 +165,41 @@ To ensure failover capabilities, consider using a secondary private IPv4 for inc
 
 <img src="./images/aws-vpc-eni.png" width="620"/>
 
+Subnet A Route Table
+
+Destination    | Target
+-------------- | ------
+192.168.0.0/16 | local
+0.0.0.0/0      | igw-1a2b3c4d
+
+Subnet B Route Table
+
+Destination    | Target
+-------------- | ------
+192.168.0.0/16 | local
+0.0.0.0/0      | vgw-4c5d6e7f
+
+Webserver Route Table
+
+Network        | Interface
+-------------- | ---------
+0.0.0.0/0      | 192.168.0.10  (eth0 Private IP)
+172.16.0.0     | 192.168.1.201 (eth1 Private IP)
+192.168.0.0    | 192.168.1.201 (eth1 Private IP)
+Defaut gateway | 192.168.0.10  (eth0 Private IP)
+
+Security Group for eth0
+
+Source        | Protocol | Port Range | Comments
+------------- | -------- | ---------- | --------
+0.0.0.0/0     | All      | 80         | Allow inbound traffic from the Internet to port 80.
+
+Security Group for eth1
+
+Source        | Protocol | Port Range | Comments
+------------- | -------- | ---------- | --------
+172.16.0.0/16 | All      | 22         |Allow Secure Shell (SSH) traffic from Corporate data center.
+
 ### Security Groups
 
 A security group is virual stateful firewall that controls inbound and outbound network traffic to AWS resources and Amazon EC2 instances. All Amazon EC2 instances must be launched into a security group. **If a security group is not specified at launch, then the instance will be launched into the default security group for the Amazon VPC**. The default security gorup allows communication between all resources within the security gorup, allows all outbound traffic, and denies all other traffic. You may change the rules for the default security group, but you may not delete the default security group.
