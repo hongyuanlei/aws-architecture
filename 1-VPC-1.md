@@ -325,7 +325,30 @@ Like a NAT instance, this managed service allows outbound Internet communication
 
 **To create an Availability Zone-independent architecture, create a NAT gateway in each Availability Zone and configure your routing to ensure that resources use the NAT gateway in the same Availability Zone.**
 
+### Virtual Private Gateways (VPGs), Customer Gateways (CGWs), and Virtual Private Networks (VPNs)
 
+You can connect an existing data center to Amazon VPC using either hardware or software VPN connections, which will make Amazon VPC an extension of the data center. Amazon VPC offers two ways to connect a corporate network to a VPC: VPG and CGW.
+
+A virtual private gateway (VPG) is the virtual private network (VPN) concentrator on the AWS side of the VPN connection between the two networks. A customer gateway (CGW) represents a physical device or a software application on the customer’s side of the VPN connection. After these two elements of an Amazon VPC have been created, the last step is to create a VPN tunnel. The VPN tunnel is established after traffic is generated from the customer’s side of the VPN connection.
+
+#### VPC with VPN connection to a customer network
+
+Here's example about a single VPN connection between a corporate network and an Amazon VPC.
+
+<img src="./images/aws-vpc-vpn.png" width="620"/>
+
+You must specify the type of routing that you plan to use when you create a VPN connection. If the CGW supports Border Gateway Protocol (BGP), then configure the VPN connection for dynamic routing. Otherwise, configure the connections for static routing. If you will be using static routing, you must enter the routes for your network that should be communicated to the VPG. Routes will be propagated to the Amazon VPC to allow your resources to route network traffic back to the corporate network through the VGW and across the VPN tunnel.
+Amazon VPC also supports multiple CGWs, each having a VPN connection to a single VPG (many-to-one design). In order to support this topology, the CGW IP addresses must be unique within the region.
+
+Amazon VPC will provide the information needed by the network administrator to configure the CGW and establish the VPN connection with the VPG. The VPN connection consists of two Internet Protocol Security (IPSec) tunnels for higher availability to the Amazon VPC.
+
+Following are the important points to understand about VPGs, CGWs, and VPNs:
+
+- The VPG is the AWS end of the VPN tunnel.
+- The CGW is a hardware or software application on the customer’s side of the VPN tunnel.
+- You must initiate the VPN tunnel from the CGW to the VPG.
+- VPGs support both dynamic routing with BGP and static routing.
+- The VPN connection consists of two tunnels for higher availability to the VPC.
 
 ### IPV4 address classification
 
