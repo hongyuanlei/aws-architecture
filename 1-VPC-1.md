@@ -45,7 +45,7 @@ When you create an Amazon VPC, you must specify the IPv4 address range by choosi
 
 Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, two subnets with different address ranges (10.0.0.0/24 and 10.0.1.0/24) placed in different Availability Zones, and a route table with the local route specified.
 
-<img src="./images/aws-vpc-vpc.png" width="620"/>
+<img src="./images/aws-vpc-vpc.png" width="720"/>
 
 An Amazon VPC consists of the following components:
 - Subnets
@@ -115,7 +115,7 @@ You can scope the route to all destinations not explictly known to the route tab
 
 Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, one subnet with an address range of 10.0.0.0/24, a route table, an attached IGW, and a single Amazon EC2 instance with a private IP address and an EIP address. The route table contains two routes: the local route that permits inter-VPC communication and a route that sends all non-local traffic to the IGW (igw-id). Note that the Amazon EC2 instance has a public IP address (EIP = 198.51.100.2); this instance can be accessed from the Internet, and traffic may originate and return to this instance.
 
-<img src="./images/aws-vpc-route-table.png" width="620"/>
+<img src="./images/aws-vpc-route-table.png" width="720"/>
 
 ### Dynamic Host Configuration Protocl (DHCP) Option Sets
 
@@ -163,7 +163,7 @@ You can create a management network using network interfaces. In this scenario, 
 
 To ensure failover capabilities, consider using a secondary private IPv4 for incoming traffic on a network interface. In the event of an instance failure, you can move the interface and/or secondary private IPv4 address to a standy instance.
 
-<img src="./images/aws-vpc-eni.png" width="620"/>
+<img src="./images/aws-vpc-eni.png" width="720"/>
 
 Subnet A Route Table
 
@@ -285,7 +285,7 @@ An Amazon VPC may have multiple peering connections, and peering is a one-to-one
 
 VPC peering connections do not support transitive routing.
 
-<img src="./images/aws-vpc-peering.png" width="620"/>
+<img src="./images/aws-vpc-peering.png" width="720"/>
 
 VPC A has two peering connections with two different VPCs: VPC B and VPC C. Therefore, VPC A can communicate directly with VPCs B and C. Because peering connections do not support transitive routing, VPC A cannot be a transit point for traffic between VPCs B and C. In order for VPCs B and C to communicate with each other, a peering connection must be explicitly created between them.
 
@@ -335,7 +335,7 @@ A virtual private gateway (VPG) is the virtual private network (VPN) concentrato
 
 Here's example about a single VPN connection between a corporate network and an Amazon VPC.
 
-<img src="./images/aws-vpc-vpn.png" width="620"/>
+<img src="./images/aws-vpc-vpn.png" width="720"/>
 
 You must specify the type of routing that you plan to use when you create a VPN connection. If the CGW supports Border Gateway Protocol (BGP), then configure the VPN connection for dynamic routing. Otherwise, configure the connections for static routing. If you will be using static routing, you must enter the routes for your network that should be communicated to the VPG. Routes will be propagated to the Amazon VPC to allow your resources to route network traffic back to the corporate network through the VGW and across the VPN tunnel.
 Amazon VPC also supports multiple CGWs, each having a VPN connection to a single VPG (many-to-one design). In order to support this topology, the CGW IP addresses must be unique within the region.
