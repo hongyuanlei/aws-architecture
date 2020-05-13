@@ -261,6 +261,28 @@ Here are the important points to understand about security groups:
 - Instances associated with the same security group can’t talk to each other unless you add rules allowing it (with the exception being the default security group).
 - You can change the security groups with which an instance is associated after launch, and the changes will take effect immediately.
 
+### Peering
+
+An Amazon VPC peering connection is a networking connection between 2 Amazon VPCs that enables instances in either Amazon VPC to communicate with each other as if they are within the same network. You can create an Amazon VPC peering connection between your own Amazon VPCs or with an Amazon VPC in other AWS account within a single region. A peering connection is neither a gateway nor an Amazon VPN connection and does not introduce a single point of failure for communication.
+
+Peering connections are created though a request/accpet protocol. The owner of the requesting Amazon VPC sends a request to peer to the owener of the peer Amazon VPC. If the peer Amazon VPC is within the same account, it is identified by its VPC ID. If the peer VPC is within a different account, it is identified by Account ID and VPC ID. The owner of the peer Amazon VPC has one week to accept or reject the request to peer with the requesting Amazon VPC before the peering request expires.
+
+An Amazon VPC may have multiple peering connections, and peering is a one-to-one relationship between Amazon VPCs, meaning 2 Amazon VPCs cannot have 2 peering agreements between them. Also, peering connections do not support transitive routing.
+
+VPC peering connections do not support transitive routing.
+
+<img src="./images/aws-vpc-peering.png" width="620"/>
+
+VPC A has two peering connections with two different VPCs: VPC B and VPC C. Therefore, VPC A can communicate directly with VPCs B and C. Because peering connections do not support transitive routing, VPC A cannot be a transit point for traffic between VPCs B and C. In order for VPCs B and C to communicate with each other, a peering connection must be explicitly created between them.
+
+Here are the important points to understand:
+
+- You cannot create a peering connection between Amazon VPCs that have matching or overlapping CIDR blocks.
+- **You cannot create a peering connection between Amazon VPCs in different regions**.
+- Amazon VPC peering connections do not support transitive routing.
+- You cannot have more than one peering connection between the same two Amazon VPCs at the same time.
+
+
 ### IPV4 address classification
 
 Traditional IP address classification divides IP addresses into Class A, Class B, Class C, Class D, and Class E
