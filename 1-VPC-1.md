@@ -261,6 +261,20 @@ Here are the important points to understand about security groups:
 - Instances associated with the same security group can’t talk to each other unless you add rules allowing it (with the exception being the default security group).
 - You can change the security groups with which an instance is associated after launch, and the changes will take effect immediately.
 
+### Network Access Control Lists (ACLs)
+
+A network access control lists(ACL) is another layer of security that acts as a stateless firewall on a subnet level. A network ACL is a numbered list of rules that AWS evaluates in order, starting with the lowest numbered rule, to determine whether traffic is allowed in or out of any subnet associated with the network ACL. Amazon VPCs are created with modifiable default network ACL associated with every subnet that allows all inbound and outbound traffic. When you create a custom network ACL, its initial configuration will deny all inbound and outbound traffic until you create rules that allow otherwise. You may set up network ACLs with rules similar with your security groups in order to add a layer of security to your Amazon VPC, or you may choose to use the default network ACL that does not filter traffic traversing the subnet boundary. Overall, every subnet must be associated with a network ACL.
+
+#### Comparison of Security Group and Network ACLs
+
+Security Group                                                              | Network ACL
+--------------------------------------------------------------------------- | ------------
+Operate at the instance level(first layer of defense)                       | Operates at the subnet level (second layer of defense) 
+Supports allow rules only                                                   | Supports allow rules and deny rules
+Stateful: Return traffic is automatically allowed, regardless of any rules  | Stateless: Return taffic must be explicitly allowd by rules
+AWS evaluates all rules before deciding whether to allow traffic            | AWS processes rules in number order when deciding whether to all traffic
+Applied selectively to individual instance                                  | Automatically applied to all instances in the associated subnets; this is a backup layer of defense, so you don’t have to rely on someone specifying the security group.
+
 ### Peering
 
 An Amazon VPC peering connection is a networking connection between 2 Amazon VPCs that enables instances in either Amazon VPC to communicate with each other as if they are within the same network. You can create an Amazon VPC peering connection between your own Amazon VPCs or with an Amazon VPC in other AWS account within a single region. A peering connection is neither a gateway nor an Amazon VPN connection and does not introduce a single point of failure for communication.
