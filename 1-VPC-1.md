@@ -149,7 +149,7 @@ AWS maintains a pool of public IP addresses in  each region and makes them avail
 
 ### Elastic Network Interfaces(ENIs)
 
-An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary(eth0). Assigning a second network interface to an instance via an ENI allows it to be dual-homed(have network presence in different subnets). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to an replacement instance.
+An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary(eth0). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to an replacement instance.
 
 ENIs allow you:
 - Create a management network 
@@ -199,6 +199,18 @@ Security Group for eth1
 Source        | Protocol | Port Range | Comments
 ------------- | -------- | ---------- | --------
 172.16.0.0/16 | All      | 22         |Allow Secure Shell (SSH) traffic from Corporate data center.
+
+#### Use Network and Security Appliances in Your VPC
+
+Some network and security appliances, such as load balancers, network address translation(NAT) servers, and proxy servers prefer to be configured with multiple network interfaces. You can create and attach secondary network interfaces to instances in a VPC that are running these types of applications and configure the additional interfaces with their own public and private IP addresses, security groups, and source/destination checking.
+
+#### Creating Dual-homed Instances with Workloads/Roles on Distinct Subnets
+
+You can place a network interface on each of your web servers that connects to a mid-tier network where an application server resides. The application server can also be dual-homed to a backend network(subnet) where the database server resides. Instead of routing network packets through the dual-homed instances, each dual-homed instance receives and processes requests on the front end, initiates a connection to the backend, and then sends requests to the servers on the backend network.
+
+#### Create a Low Budget High Availability Solution
+
+If one of your instances serving a particular function fails, its network interface can be attached to a replacement or hot standby instance pre-configured for the same role in order to rapidly recover the service. For example, you can use a network interface as your primary or secondary network interface to a critical service such as a database instance or a NAT instance. If the instance fails, you can attach the network interface to a hot standby instance. **Because the interface maintains its private IP addresses, Elastic IP addresses, and MAC address, network traffic begins flowing to the standby instance as soon as you attach the network interface to the replacement instance**. Users experience a brief loss of connectivity between the time the instance fails and the time that the network interface is attached to the standby instance, but no changes to the VPC route table or your DNS server are required.
 
 ### Security Groups
 
