@@ -53,7 +53,7 @@ Serving static assets, such as described previously, is a common way to use a CD
 
 A cache behavior lets you configure a variety of Amazon CloudFront functionalities for a given URL path pattern for files on your website. For example, One cache behavior applies to all PHP files in a web server (dynamic content), using the path pattern *.php, while another behavior applies to all JPEG images in another origin server (static content), using the path pattern *.jpg.
 
-<img src="./images/aws-cloudfront-static-and-dynamic-content.png" width="620"/>
+<img src="./images/aws-cloudfront-static-and-dynamic-content.png" width="720"/>
 
 The functionality you can configure for each cache behavior includes the following:
 - The path pattern
