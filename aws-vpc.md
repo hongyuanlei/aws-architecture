@@ -1,8 +1,8 @@
 ### VPC
 
-The Amazon Virtual Private Cloud(VPC) is a custom-defined virtual network within the AWS Cloud. You can provision your own logically isolated section of AWS, similar to desiging and implementing a separate independent network that would operate in an on-premises data center.
+The Amazon Virtual Private Cloud(VPC) is a custom-defined virtual network within the AWS Cloud. You can provision your own logically isolated section of AWS, similar to designing and implementing a separate independent network that would operate in an on-premises data center.
 
-Amazon VPC is the networking layer for Amzaon Elastic Compute Cloud(Amazon EC2), and it allows you to build your own virtual network within AWS. You contorl various aspects of your Amazon VPC, including:
+Amazon VPC is the networking layer for Amazon Elastic Compute Cloud(Amazon EC2), and it allows you to build your own virtual network within AWS. You control various aspects of your Amazon VPC, including:
 - Selecting your own IP address range.
 - Creating your own subnets
 - Configuring your own route tables, network gateways, and security setting.
@@ -41,7 +41,7 @@ A subnet is a segment of an Amazon VPC's IP address range where you can launch A
 - 10.0.0.3: Reserved by AWS for future use.
 - 10.0.0.255: Network broadcast address. We do not support broadcast in a VPC, therefore we reserve this address.
 
-After creating an Amazon VPC, you can add one or more subnets in each Availability Zone. **Subnets reside within one Availabiltiy Zone and cannot span zones.**
+After creating an Amazon VPC, you can add one or more subnets in each Availability Zone. **Subnets reside within one Availability Zone and cannot span zones.**
 
 Subnets can be classified as public, private, or VPN-only. 
 - A public subnet is one in which the associated route table directs the subnet's traffic to the Amazon VPC's IGW.
@@ -59,17 +59,17 @@ Each route table contains a default route called the local route, which enables 
 You should remember the following points about route tables:
 
 - Your VPC has an implicit router.
-- Your VPC automitically comes with a main route table that you can modify.
+- Your VPC automatically comes with a main route table that you can modify.
 - You can create additional custom route tables for your VPC.
 - Each subnet must be associated with a route table, which controls the routing for the subnet. If you don't explicitly associate a subnet with a particular route table, the subnet uses the main route table.
-- You can replace main route table with a custom table that you've created so that each new subnet is automatically associated with it.
+- You can replace the main route table with a custom table that you've created so that each new subnet is automatically associated with it.
 - Each route in a table specifies a destination CIDR and a target; for example, traffic destined for 172.16.0.0/12 is targeted for the VPG. AWS uses the most specific route that matches the traffic to determine how to route the traffic.
 
 ### Internet Gateways
 
-An Internet Gateway(IGW) is horizontally scaled, redundant, and highly available Amazon VPC component that allows communication betwwwn instances in your Amazon VPC and the Internet. An IGW provides a target in your Amazon VPC route tables for Internet-routable traffic, and it performs network address translation for instances that have been assigned public IP addresses.
+An Internet Gateway(IGW) is a horizontally scaled, redundant, and highly available Amazon VPC component that allows communication between instances in your Amazon VPC and the Internet. An IGW provides a target in your Amazon VPC route tables for Internet-routable traffic, and it performs network address translation for instances that have been assigned public IP addresses.
 
-**Amazon EC2 instances within an Amazon VPC are only aware of their private IP addresses**. When traffic is sent from the instance to Internet, the IGW translates the reply address to the instance's public IP address(or EIP address) and maintains the one-to-one map of the instance private IP address and public IP address. When an instance receives traffic from the Internet, the IGW translates the destination address(public IP address) to the instance's private IP address and forwards the traffic to the Amazon VPC.
+**Amazon EC2 instances within an Amazon VPC are only aware of their private IP addresses**. When traffic is sent from the instance to the Internet, the IGW translates the reply address to the instance's public IP address(or EIP address) and maintains the one-to-one map of the instance private IP address and public IP address. When an instance receives traffic from the Internet, the IGW translates the destination address(public IP address) to the instance's private IP address and forwards the traffic to the Amazon VPC.
 
 You must do the following to create a public subnet with Internet access:
 - Attach an IGW to your Amazon VPC.
@@ -79,7 +79,7 @@ You must do the following to create a public subnet with Internet access:
 You must do the following to enable an Amazon EC2 instance to send and receive traffic from the Internet:
 - Assign a public IP address or EIP address.
 
-You can scope the route to all destinations not explictly known to the route table(0.0.0.0/0), or you can scope the route to a narrower range of IP addresses, such as the public IP addresses of your company's public endpoint outside of AWS or the EIP addresses of other Amazon EC2 instances outside your Amazon VPC.
+You can scope the route to all destinations not explicitly known to the route table(0.0.0.0/0), or you can scope the route to a narrower range of IP addresses, such as the public IP addresses of your company's public endpoint outside of AWS or the EIP addresses of other Amazon EC2 instances outside your Amazon VPC.
 
 Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, one subnet with an address range of 10.0.0.0/24, a route table, an attached IGW, and a single Amazon EC2 instance with a private IP address and an EIP address. The route table contains two routes: the local route that permits inter-VPC communication and a route that sends all non-local traffic to the IGW (igw-id). Note that the Amazon EC2 instance has a public IP address (EIP = 198.51.100.2); this instance can be accessed from the Internet, and traffic may originate and return to this instance.
 
@@ -89,12 +89,12 @@ Here's an example, an Amazon VPC with an address space of 10.0.0.0/16, one subne
 
 DHCP provides a standard for passing configuration information to hosts on a TCP/IP network. The options field of a DHCP message contains the configuration parameters. Some of those parameters are the domain name, domain name server, and the netbios-node-type.
 
-AWS automically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options: 
+AWS automatically creates and associates a DHCP option set for your Amazon VPC upon creation and sets two options: 
 - domain-name-server(defaulted to AmazonProvidedDNS)
 AmazonProvidedDNS is an Amazon Domain Name System(DNS) server, and this option enables DNS for instances that need to communicate over the Amazon VPC's IGW.
 - domain-name(defaulted to the domain name for your region). 
 
-The DHCP option sets element of an Amazon VPC allows your to direct Amazon EC2 host name assignments to your own resources. To assign your own domain name to your instances, create a custom DHCP option set and assign it to your Amazon VPC. You can configure the following values within a DHCP option set:
+The DHCP option sets element of an Amazon VPC allows you to direct Amazon EC2 hostname assignments to your own resources. To assign your own domain name to your instances, create a custom DHCP option set and assign it to your Amazon VPC. You can configure the following values within a DHCP option set:
 
 - domain-name-servers - The IP addresses of up to four domain name servers, separated by commas. The default is AmazonProvidedDNS.
 - domain-name - Specify the desired domain name here(for example, mycompany.com).
@@ -106,20 +106,20 @@ Every Amazon VPC must have only one DHCP option set assigned to it.
 
 ### Elastic IP Addresses(EIPs)
 
-AWS maintains a pool of public IP addresses in  each region and makes them available for you to assicate to resources within your Amazon VPCs. An Elastic IP addresses is a static, public IP address in the pool for the region that you can allocate to your account(pull from the pool) and release(return to the pool). EIPs allow you to maintain a set of IP addresses that remain fixed while the underlying infrastructure may change over time. Here are the important points to understand:
+AWS maintains a pool of public IP addresses in each region and makes them available for you to associate to resources within your Amazon VPCs. An Elastic IP address is a static, public IP address in the pool for the region that you can allocate to your account(pull from the pool) and release(return to the pool). EIPs allows you to maintain a set of IP addresses that remain fixed while the underlying infrastructure may change over time. Here are the important points to understand:
 
 - You must first allocate an EIP for use within a VPC and then assign it to an instance.
-- EIPs are speicfic to a region.
-- There is one-to-one relationship between network inerfaces and EIPs.
+- EIPs are specific to a region.
+- There is a one-to-one relationship between network interfaces and EIPs.
 - You can move EIPs from one instance to another, either in the same Amazon VPC or a different Amazon VPC within the same region.
 - EIPs remain associated with your AWS account until you explicitly release them.
 - There are charges for EIPs allocated to your account, even when you are not associated with a resource.
 
 ### Elastic Network Interfaces(ENIs)
 
-An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary(eth0). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to an replacement instance.
+An ENI is a network interface that you can attach to an instance in an Amazon VPC. ENIs are only available within an Amazon VPC, and they are associated with a subnet upon creation. They can have one public IP address and multiple private IP addresses. If there are multiple private IP addresses, one of them is primary(eth0). An ENI created independently of a particular instance persists regardless of the lifetime of any instance to which it is attached; if an underlying instance fails, the IP address may be preserved by attaching the ENI to a replacement instance.
 
-ENIs allow you:
+ENIs allows you:
 - Create a management network 
 - Use network and security appliances in your Amazon VPC
 - Create dual-homed instances with workloads/roles on distinct subnets.
@@ -127,9 +127,9 @@ ENIs allow you:
 
 #### Creating a Management Network
 
-You can create a management network using network interfaces. In this scenario, the primary network interface(eth0) on the instance handles public traffic and the secondary network interface(eth1) handles backend management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls. The public interface, which may or may not be behind a load balancer, has an associated security group that allows access to the server from the interent(for example, allow TCP port 80 and 443 from 0.0.0.0/0, or from the load balancer) while the private facing interface has an associated security group allowing SSH access only from an allowed range of IP addresses either within the VPC or from the internet, a private subnet within the VPC or virtual private gateway.
+You can create a management network using network interfaces. In this scenario, the primary network interface(eth0) on the instance handles public traffic and the secondary network interface(eth1) handles backend management traffic and is connected to a separate subnet in your VPC that has more restrictive access controls. The public interface, which may or may not be behind a load balancer, has an associated security group that allows access to the server from the internet(for example, allow TCP port 80 and 443 from 0.0.0.0/0, or from the load balancer) while the private facing interface has an associated security group allowing SSH access only from an allowed range of IP addresses either within the VPC or from the internet, a private subnet within the VPC or virtual private gateway.
 
-To ensure failover capabilities, consider using a secondary private IPv4 for incoming traffic on a network interface. In the event of an instance failure, you can move the interface and/or secondary private IPv4 address to a standy instance.
+To ensure failover capabilities, consider using a secondary private IPv4 for incoming traffic on a network interface. In the event of an instance failure, you can move the interface and/or secondary private IPv4 address to a standby instance.
 
 <img src="./images/aws-vpc-eni.png" width="720"/>
 
@@ -174,7 +174,7 @@ Some network and security appliances, such as load balancers, network address tr
 
 #### Creating Dual-homed Instances with Workloads/Roles on Distinct Subnets
 
-You can place a network interface on each of your web servers that connects to a mid-tier network where an application server resides. The application server can also be dual-homed to a backend network(subnet) where the database server resides. Instead of routing network packets through the dual-homed instances, each dual-homed instance receives and processes requests on the front end, initiates a connection to the backend, and then sends requests to the servers on the backend network.
+You can place a network interface on each of your web servers that connect to a mid-tier network where an application server resides. The application server can also be dual-homed to a backend network(subnet) where the database server resides. Instead of routing network packets through the dual-homed instances, each dual-homed instance receives and processes requests on the front end, initiates a connection to the backend, and then sends requests to the servers on the backend network.
 
 #### Create a Low Budget High Availability Solution
 
@@ -182,9 +182,9 @@ If one of your instances serving a particular function fails, its network interf
 
 ### Security Groups
 
-A security group is virual stateful firewall that controls inbound and outbound network traffic to AWS resources and Amazon EC2 instances. All Amazon EC2 instances must be launched into a security group. **If a security group is not specified at launch, then the instance will be launched into the default security group for the Amazon VPC**. The default security gorup allows communication between all resources within the security gorup, allows all outbound traffic, and denies all other traffic. You may change the rules for the default security group, but you may not delete the default security group.
+A security group is virtual stateful firewall that controls inbound and outbound network traffic to AWS resources and Amazon EC2 instances. All Amazon EC2 instances must be launched into a security group. **If a security group is not specified at launch, then the instance will be launched into the default security group for the Amazon VPC**. The default security group allows communication between all resources within the security group, allows all outbound traffic, and denies all other traffic. You may change the rules for the default security group, but you may not delete the default security group.
 
-Here is the settings of the default security group.
+Here are the settings of the default security group.
 
 - Inbound
 
@@ -207,8 +207,8 @@ For example, here's a security group for web servers.
 Source                                | Protocol | Port Range | Comments
 ------------------------------------- | -------- | ---------- | --------
 0.0.0.0/0                             | TCP      | 80         | Allow inbound traffic from the Internet to port 80.
-You network's public IP address range | TCP      | 22         | Allow Secure Shell (SSH) traffic from your company network.
-You network's public IP address range | TCP      | 3389       | Allow Remote Desktop Protocol (RDP) traffic from your company network.
+Your network's public IP address range | TCP      | 22         | Allow Secure Shell (SSH) traffic from your company network.
+Your network's public IP address range | TCP      | 3389       | Allow Remote Desktop Protocol (RDP) traffic from your company network.
 
 - Outbound
 
@@ -239,7 +239,7 @@ Security Group                                                              | Ne
 --------------------------------------------------------------------------- | ------------
 Operate at the instance level(first layer of defense)                       | Operates at the subnet level (second layer of defense) 
 Supports allow rules only                                                   | Supports allow rules and deny rules
-Stateful: Return traffic is automatically allowed, regardless of any rules  | Stateless: Return taffic must be explicitly allowd by rules
+Stateful: Return traffic is automatically allowed, regardless of any rules  | Stateless: Return traffic must be explicitly allowed by rules
 AWS evaluates all rules before deciding whether to allow traffic            | AWS processes rules in number order when deciding whether to all traffic
 Applied selectively to individual instance                                  | Automatically applied to all instances in the associated subnets; this is a backup layer of defense, so you don’t have to rely on someone specifying the security group.
 
@@ -247,7 +247,7 @@ Applied selectively to individual instance                                  | Au
 
 An Amazon VPC peering connection is a networking connection between 2 Amazon VPCs that enables instances in either Amazon VPC to communicate with each other as if they are within the same network. You can create an Amazon VPC peering connection between your own Amazon VPCs or with an Amazon VPC in other AWS account within a single region. A peering connection is neither a gateway nor an Amazon VPN connection and does not introduce a single point of failure for communication.
 
-Peering connections are created though a request/accpet protocol. The owner of the requesting Amazon VPC sends a request to peer to the owener of the peer Amazon VPC. If the peer Amazon VPC is within the same account, it is identified by its VPC ID. If the peer VPC is within a different account, it is identified by Account ID and VPC ID. The owner of the peer Amazon VPC has one week to accept or reject the request to peer with the requesting Amazon VPC before the peering request expires.
+Peering connections are created through a request/accept protocol. The owner of the requesting Amazon VPC sends a request to peer to the owner of the peer Amazon VPC. If the peer Amazon VPC is within the same account, it is identified by its VPC ID. If the peer VPC is within a different account, it is identified by Account ID and VPC ID. The owner of the peer Amazon VPC has one week to accept or reject the request to peer with the requesting Amazon VPC before the peering request expires.
 
 An Amazon VPC may have multiple peering connections, and peering is a one-to-one relationship between Amazon VPCs, meaning 2 Amazon VPCs cannot have 2 peering agreements between them. Also, peering connections do not support transitive routing.
 
@@ -266,11 +266,11 @@ Here are the important points to understand:
 
 ### Network Address Translation (NAT) Instances and NAT Gateways
 
-By default, any instance that you launch into a private subnet in an Amazon VPC is not able to communicate with the Interent through the IGW. This is problematic if the instances within private subnets need direct access to the Internet from the Amazon VPC in order to apply security updates, download patches, or update application software. AWS provides NAT instances and NAT gateways to allow instances deployed in private subnets to gain Internet access. For common use cases, we recommand that you use a NAT gateway instead of a NAT instance. The NAT gateway provides better availability and higher bandwith, and requires less adaministrative effort than NAT instances.
+By default, any instance that you launch into a private subnet in an Amazon VPC is not able to communicate with the Internet through the IGW. This is problematic if the instances within private subnets need direct access to the Internet from the Amazon VPC in order to apply security updates, download patches, or update application software. AWS provides NAT instances and NAT gateways to allow instances deployed in private subnets to gain Internet access. For common use cases, we recommend that you use a NAT gateway instead of a NAT instance. The NAT gateway provides better availability and higher bandwidth and requires less administrative effort than NAT instances.
 
 #### NAT Instance
 
-A NAT instance is an Amazon Linux Amazon Machine Image(AMI) that is designed to accpet traffic from instances within a private subnet,  translate the source IP address to the public IP address of the NAT instance, and forward the traffic to the IGW. In addition, the NAT instance maintains the state of the forwarded traffic in order to return response traffic from the Internet to the proper instance in the private subnet. These instances have the string amzn-ami-vpc-nat in their names, which is searchable in the Amazon EC2 console.
+A NAT instance is an Amazon Linux Amazon Machine Image(AMI) that is designed to accept traffic from instances within a private subnet,  translate the source IP address to the public IP address of the NAT instance, and forward the traffic to the IGW. In addition, the NAT instance maintains the state of the forwarded traffic in order to return response traffic from the Internet to the proper instance in the private subnet. These instances have the string amzn-ami-vpc-nat in their names, which is searchable in the Amazon EC2 console.
 
 To allow instances within a private subnet to access Internet resources through the IGW via a NAT instance, you must do the following:
 - Create a security group for the NAT with outbound rules that specify the needed Internet resources by port, protocol, and IP address.
@@ -301,7 +301,7 @@ A virtual private gateway (VPG) is the virtual private network (VPN) concentrato
 
 #### VPC with VPN connection to a customer network
 
-Here's example about a single VPN connection between a corporate network and an Amazon VPC.
+Here's an example of a single VPN connection between a corporate network and an Amazon VPC.
 
 <img src="./images/aws-vpc-vpn.png" width="720"/>
 
@@ -315,7 +315,7 @@ Following are the important points to understand about VPGs, CGWs, and VPNs:
 - The VPG is the AWS end of the VPN tunnel.
 - The CGW is a hardware or software application on the customer’s side of the VPN tunnel.
 - You must initiate the VPN tunnel from the CGW to the VPG.
-- VPGs support both dynamic routing with BGP and static routing.
+- VPGs support both dynamic routings with BGP and static routing.
 - The VPN connection consists of two tunnels for higher availability to the VPC.
 
 ### IPV4 address classification
