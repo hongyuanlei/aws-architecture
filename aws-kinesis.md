@@ -21,7 +21,7 @@ Each of these services can scale to handle virtually limitless data streams.
 
 Amazon Kinesis Firehose receives stream data and stores it in Amazon S3, Amazon Redshift, or Amazon Elasticsearch. You do not need to write any code, just create a delivery stream and configure the destination for your data. Clients write data to the stream using an AWS API call and the data is automatically sent to the proper destination. The various destination options are shown in this picture:
 
-<img src="./images/aws-kinesis.png" width="720"/>
+<img src="./images/aws-kinesis-firehose.png" width="720"/>
 
 When configured to save a stream to Amazon S3, Amazon Kinesis Firehose sends the data directly to Amazon S3. For and Amazon Redshift destination, the data is first written to Amazon S3, and then an Amazon Redshift `COPY` command is executed to load the data into Amazon Redshift. Amazon Kinesis Firehose can also write data out to Amazon Elasticsearch, with the option to back the data up concurrently to Amazon S3.
 
