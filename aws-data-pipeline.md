@@ -18,7 +18,7 @@ If an activity fails, retry is automatic. The activity will continue to retry up
 
 AWS Data Pipeline can be used for virtually any batch mode ETL process. A simple example is shown below:
 
-<img src="./images/aws-data-pipeline.png" width="720"/>
+<img src="./images/aws-data-pipeline.png" width="820"/>
 
 The pipeline is performing the following workflow:
 
